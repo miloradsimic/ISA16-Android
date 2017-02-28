@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <!-- COLOR FORMAT:   ARGB  -->
+    <!-- GENERIC APP COLORS -->
+    <item name="app_white" type="color">#ffffff</item>
+    <item name="app_black" type="color">#000000</item>
+    <item name="app_gray" type="color">#cccccc</item>
+
+    <item name="app_dialog_gray" type="color">#f9f9f9</item>
+
+    <item name="app_transparent" type="color">#00000000</item>
+    <color name="app_semi_transparent">#CC464344</color>
+    <item name="app_primary" type="color">#fffaa51b</item>
+    <item name="app_active" type="color">#ffd66f00</item>
+
+    <item name="app_primary_dark" type="color">#ff0085C2</item>
+    <item name="app_secondary" type="color">#ff636e89</item>
+    <item name="app_secondary_dark" type="color">#ff4e566b</item>
+    <item name="app_et_light" type="color">#ffdee4e4</item>
+    <item name="app_et_dark" type="color">#FFA9A3A1</item>
+    <item name="app_et_ultra_dark" type="color">#ff5D6363</item>
+
+    <item name="app_selected" type="color">#7f0085C2</item>
+
+    <item name="app_unread_text" type="color">#FFEEEFF1</item>
+    <item name="app_unread_item" type="color">#ff88817f</item>
+    <item name="app_read_item" type="color">#ffdde2e4</item>
+    <item name="app_read_text" type="color">@color/app_secondary_dark</item>
+</resources>
