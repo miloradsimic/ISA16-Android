@@ -18,6 +18,7 @@ public class API {
     private static final String API_BASE_URL = "http://192.168.1.101:8080/";
     private static final String API_LOGIN = "auth/login";
     private static final String API_LOGOUT = "auth/logout";
+    private static final String API_RESTAURANTS = "restaurants";
     private static final String API_SIGN_UP = "authorize/sign-up";
 
     private static API sInstance;
@@ -57,6 +58,18 @@ public class API {
 
         ZctRequest request = new ZctRequest.Builder(API_BASE_URL + API_LOGOUT)
                 .responseClass(Object.class)
+                .method(ZctRequest.Method.GET)
+                .response(listener)
+                .cookie(token)
+                .build();
+        App.getNetwork().sendRequest(request);
+    }
+//    ArrayList<RestaurantItemBean>
+    public void getRestaurants(ZctResponse<String> listener) {
+
+        String token = App.getInstance().getUserToken();
+//        .responseClass(new TypeToken<List<RestaurantItemBean>>(){}.getClass())
+        ZctRequest request = new ZctRequest.Builder(API_BASE_URL + API_RESTAURANTS)
                 .method(ZctRequest.Method.GET)
                 .response(listener)
                 .cookie(token)

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/sh_light_bgnd"
+    android:orientation="horizontal"
+    android:padding="@dimen/medium_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:orientation="vertical">
+
+        <com.restaurant.milorad.isa_proj_android.views.MyriadProBoldTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="This is title"
+            android:textAppearance="?attr/textAppearanceListItemSmall"
+            android:textColor="@color/app_secondary_dark"
+            android:textStyle="bold" />
+
+        <com.restaurant.milorad.isa_proj_android.views.MyriadProRegularTextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/small_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="This is message body"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/app_read_text" />
+    </LinearLayout>
+</LinearLayout>

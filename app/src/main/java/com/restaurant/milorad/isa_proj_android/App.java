@@ -10,7 +10,10 @@ import com.restaurant.milorad.isa_proj_android.common.AppSettings;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
 import com.restaurant.milorad.isa_proj_android.common.ZctPersistData;
 import com.restaurant.milorad.isa_proj_android.db.DatabaseController;
+import com.restaurant.milorad.isa_proj_android.network.model.RestaurantItemBean;
 import com.zerocodeteam.network.ZctNetwork;
+
+import java.util.ArrayList;
 
 /**
  * Created by milorad on 25.2.2017
@@ -167,5 +170,18 @@ public class App extends Application {
     public void resetUserDbId() {
         mLogger.d("Reset user DB id.");
         mSharedPref.removeData(AppConstants.PREF_USER_DB_ID);
+    }
+
+    /**
+     * Keep data in session.
+     */
+    private ArrayList<RestaurantItemBean> restaurants = new ArrayList<>();
+
+    public ArrayList<RestaurantItemBean> getRestaurants() {
+        return restaurants;
+    }
+
+    public void setRestaurants(ArrayList<RestaurantItemBean> restaurants) {
+        this.restaurants = restaurants;
     }
 }

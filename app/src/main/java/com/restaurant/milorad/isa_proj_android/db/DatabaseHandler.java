@@ -16,14 +16,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // TABLE NAMES
     public static final String TABLE_USERS = "users";
+    public static final String TABLE_RESTAURANTS = "RESTAURANTS";
+
+
 
     // TABLE_USERS
     public static final String USER_ID = "usr_id";
     public static final String USER_EMAIL = "usr_email";
     public static final String[] USERS_COLUMNS = {USER_ID, USER_EMAIL};
 
+    // TABLE_RESTAURANTS
+    public static final String RESTAURANT_ID = "restaurant_id";
+    public static final String RESTAURANT_NAME = "restaurant_name";
+    public static final String RESTAURANT_DESCRIPTION = "restaurant_desc";
+    public static final String[] RESTAURANT_COLUMNS = {RESTAURANT_ID, RESTAURANT_NAME, RESTAURANT_DESCRIPTION};
 
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "(" + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + USER_EMAIL + " TEXT)";
+
+    //private static final String CREATE_TABLE_RESTAURANTS = "CREATE TABLE " + TABLE_RESTAURANTS + "(" + RESTAURANT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + USER_EMAIL + " TEXT)";
+
 
     private static final String DROP_TABLE_USERS = "DROP TABLE IF EXISTS  " + TABLE_USERS;
 

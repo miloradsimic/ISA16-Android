@@ -16,6 +16,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="error_empty_list">Notification list is empty :(</string>
 
 
     <!-- GENERIC MESSAGES -->
@@ -26,6 +27,7 @@
     <string name="dialog_ok">Ok</string>
     <string name="no_network">No network connection</string>
     <string name="no_network_message">You are offline please check your internet connection</string>
+    <string name="error_on_server">Server error occurred!</string>
 
     <string name="error_login">Login failed. Please try again.</string>
     <string name="title_activity_main">MainActivity</string>

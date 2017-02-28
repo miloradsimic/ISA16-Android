@@ -20,5 +20,7 @@ public class AppConstants {
      * Share intent constants
      */
 
+    public static final String EXTRAS_RESTAURANTS = "restaurants";
+
     public static long INVALID_USER_ID = -1;
 }

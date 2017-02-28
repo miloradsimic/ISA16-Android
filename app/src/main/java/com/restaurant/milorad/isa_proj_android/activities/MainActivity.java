@@ -14,27 +14,38 @@ import com.restaurant.milorad.isa_proj_android.R;
 import com.restaurant.milorad.isa_proj_android.common.AppUtils;
 import com.restaurant.milorad.isa_proj_android.common.IIrregularPage;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
+import com.restaurant.milorad.isa_proj_android.fragments.user.RestaurantListFragment;
 import com.restaurant.milorad.isa_proj_android.network.API;
+import com.restaurant.milorad.isa_proj_android.network.model.RestaurantItemBean;
 import com.zerocodeteam.network.ZctNetwork;
 import com.zerocodeteam.network.ZctResponse;
 
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements IIrregularPage{
+public class MainActivity extends AppCompatActivity implements IIrregularPage, RestaurantListFragment.OnListFragmentInteractionListener{
 
     private static final ZctLogger mLogger = new ZctLogger(MainActivity.class.getSimpleName(), BuildConfig.DEBUG);
+
+    public RestaurantListFragment mRestaurantListFragment;
 
     private TabLayout mTabMenu;
     private TabLayout.OnTabSelectedListener mOnTabSelectedListener;
     private ProgressDialog mProgressDialog;
     private ZctResponse<Boolean> mLogoutResponse;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.a_main);
         setupViews();
         setupListeners();
+
+        populatePageContent();
+
+//        Intent mBootIntent = getIntent();
+//        String menuJson = mBootIntent.getStringExtra(AppConstants.EXTRAS_RESTAURANTS);
+
 
         /*TODO: kreiraj menu*/
 
@@ -83,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements IIrregularPage{
         };
     }
 
+    private void populatePageContent() {
+
+        mRestaurantListFragment = RestaurantListFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mRestaurantListFragment).commitAllowingStateLoss();
+
+    }
 
     public void toolbarLogOut(View v) {
         API.getInstance().logoutUser(mLogoutResponse);
@@ -98,8 +115,9 @@ public class MainActivity extends AppCompatActivity implements IIrregularPage{
         mProgressDialog = AppUtils.showProgress(MainActivity.this);
     }
 
-    private void populatePageContent(int position) {
+
+    @Override
+    public void onListFragmentInteraction(RestaurantItemBean item) {
 
     }
-
 }

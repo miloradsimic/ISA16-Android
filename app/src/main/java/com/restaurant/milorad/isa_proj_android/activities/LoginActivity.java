@@ -14,15 +14,18 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.reflect.TypeToken;
 import com.restaurant.milorad.isa_proj_android.App;
 import com.restaurant.milorad.isa_proj_android.BuildConfig;
 import com.restaurant.milorad.isa_proj_android.R;
 import com.restaurant.milorad.isa_proj_android.common.AppUtils;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
 import com.restaurant.milorad.isa_proj_android.network.API;
+import com.restaurant.milorad.isa_proj_android.network.model.RestaurantItemBean;
 import com.zerocodeteam.network.ZctNetwork;
 import com.zerocodeteam.network.ZctResponse;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -41,11 +44,12 @@ public class LoginActivity extends AppCompatActivity {
     private ZctResponse<LinkedTreeMap<String, String>> mLoginResponse;
     private ProgressDialog mProgressDialog;
     private ZctResponse<String> mGetShift;
+    private ZctResponse<String> mRestaurantsResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.a_login);
         setupViews();
         setupListeners();
 
@@ -116,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                         break;
                     }
                     case "guest": {
-                        AppUtils.go2MainActivity(LoginActivity.this, data);
+                        API.getInstance().getRestaurants(mRestaurantsResponse);
                         break;
                     }
                     case "manager": {
@@ -136,10 +140,32 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onError(VolleyError error, ZctNetwork.ErrorType type, Map<String, String> responseHeaders, Object cookie) {
-                mLogger.d("Menu items download failed: " + error.getClass().getSimpleName());
+                mLogger.d("Login failed: " + error.getClass().getSimpleName());
                 App.getInstance().logoutUser();
                 AppUtils.hideProgress(mProgressDialog);
                 Toast.makeText(getApplicationContext(), getString(R.string.error_login), Toast.LENGTH_LONG).show();
+            }
+        };
+
+        mRestaurantsResponse = new ZctResponse<String>() {
+            @Override
+            public void onSuccess(String data, Map<String, String> responseHeaders, Object cookie) {
+                AppUtils.hideProgress(mProgressDialog);
+                ArrayList<RestaurantItemBean> restaurantList = ZctNetwork.getGson().fromJson(data, new TypeToken<ArrayList<RestaurantItemBean>>(){}.getType());
+
+                App.getInstance().setRestaurants(restaurantList);
+                AppUtils.go2MainActivity(LoginActivity.this);
+
+                Toast.makeText(getApplicationContext(), "Got restaurant list! ", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onError(VolleyError error, ZctNetwork.ErrorType type, Map<String, String> responseHeaders, Object cookie) {
+                mLogger.d("Restaurants download failed: " + error.getClass().getSimpleName());
+                App.getInstance().logoutUser();
+                AppUtils.hideProgress(mProgressDialog);
+                Toast.makeText(getApplicationContext(), getString(R.string.error_on_server), Toast.LENGTH_LONG).show();
             }
         };
     }

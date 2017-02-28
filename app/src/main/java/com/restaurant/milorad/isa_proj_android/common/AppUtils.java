@@ -13,7 +13,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.google.gson.internal.LinkedTreeMap;
 import com.restaurant.milorad.isa_proj_android.App;
 import com.restaurant.milorad.isa_proj_android.BuildConfig;
 import com.restaurant.milorad.isa_proj_android.R;
@@ -84,9 +83,9 @@ public class AppUtils {
 //        context.startActivity(intent);
 //    }
 
-    public static void go2MainActivity(Context context, LinkedTreeMap data) {
+    public static void go2MainActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra("user_profile", data);
+//        intent.putExtra("restaurants", data);
         context.startActivity(intent);
     }
 
