@@ -17,6 +17,14 @@ public class AppConstants {
 
 
     /**
+     * Shared fragments keys
+     */
+    public static final int FRAG_PROFILE = 0;
+    public static final int FRAG_RESTAURANTS = 1;
+    public static final int FRAG_FRIENDS = 2;
+
+
+    /**
      * Share intent constants
      */
 

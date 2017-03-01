@@ -6,11 +6,10 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 /**
- * Created by milorad on 28.2.17..
+ * Created by milorad on 1.3.17..
  */
 
-public class RestaurantItemBean implements Serializable{
-
+public class FriendItemBean implements Serializable{
 
     @SerializedName("id")
     @Expose
@@ -19,17 +18,10 @@ public class RestaurantItemBean implements Serializable{
     @SerializedName("name")
     @Expose
     private String name;
-
-    @SerializedName("description")
-    @Expose
-    private String description;
-
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
+//
+//    @SerializedName("visits")
+//    @Expose
+//    private String visits;
 
     public String getId() {
         return id;
@@ -46,4 +38,12 @@ public class RestaurantItemBean implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
+//
+//    public String getVisits() {
+//        return visits;
+//    }
+//
+//    public void setVisits(String visits) {
+//        this.visits = visits;
+//    }
 }

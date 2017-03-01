@@ -114,7 +114,7 @@ public class App extends Application {
     }
 
     public String getRole() {
-        String role = (String) mSharedPref.readData(ZctPersistData.Type.STRING, AppConstants.PREF_EMAIL_KEY);
+        String role = (String) mSharedPref.readData(ZctPersistData.Type.STRING, AppConstants.PREF_ROLE_KEY);
         mLogger.d("Read user role: " + role);
         return role;
     }

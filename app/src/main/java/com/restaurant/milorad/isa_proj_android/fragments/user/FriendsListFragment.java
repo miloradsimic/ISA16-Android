@@ -14,8 +14,7 @@ import android.view.ViewGroup;
 import com.restaurant.milorad.isa_proj_android.BuildConfig;
 import com.restaurant.milorad.isa_proj_android.R;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
-import com.restaurant.milorad.isa_proj_android.network.model.RestaurantItemBean;
-import com.restaurant.milorad.isa_proj_android.network.model.RestaurantsBean;
+import com.restaurant.milorad.isa_proj_android.network.model.FriendsBean;
 
 /**
  * A fragment representing a list of Items.
@@ -23,35 +22,34 @@ import com.restaurant.milorad.isa_proj_android.network.model.RestaurantsBean;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class RestaurantListFragment extends Fragment {
+public class FriendsListFragment extends Fragment {
 
-    private static final ZctLogger mLogger = new ZctLogger(RestaurantListFragment.class.getSimpleName(), BuildConfig.DEBUG);
-    private static final String RESTAURANTS_LIST_BUNDLE_KEY = "restaurant_list_data";
+    private static final ZctLogger mLogger = new ZctLogger(FriendsListFragment.class.getSimpleName(), BuildConfig.DEBUG);
+    private static final String FRIENDS_LIST_BUNDLE_KEY = "friends_list_data";
 
     private OnListFragmentInteractionListener mListener;
-    private RestaurantListAdapter mRestaurantListAdapter;
+    private FriendListAdapter mFriendListAdapter;
     private View mEmptyView;
-    private RestaurantsBean mRestaurantsData;
+    private FriendsBean mFriendsData;
 
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public RestaurantListFragment() {
+    public FriendsListFragment() {
     }
 
-    public static RestaurantListFragment newInstance() {
-        RestaurantListFragment fragment = new RestaurantListFragment();
+    public static FriendsListFragment newInstance() {
+        FriendsListFragment fragment = new FriendsListFragment();
         return fragment;
     }
 
-    @SuppressWarnings("unused")
-    public static RestaurantListFragment newInstance(RestaurantsBean restaurants) {
-        RestaurantListFragment fragment = new RestaurantListFragment();
+    public static FriendsListFragment newInstance(FriendsBean friends) {
+        FriendsListFragment fragment = new FriendsListFragment();
         Bundle args = new Bundle();
 
-        args.putSerializable(RESTAURANTS_LIST_BUNDLE_KEY, restaurants);
+        args.putSerializable(FRIENDS_LIST_BUNDLE_KEY, friends);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,17 +60,17 @@ public class RestaurantListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-                mRestaurantsData = (RestaurantsBean) getArguments().getSerializable(RESTAURANTS_LIST_BUNDLE_KEY);
+            mFriendsData = (FriendsBean) getArguments().getSerializable(FRIENDS_LIST_BUNDLE_KEY);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.f_restaurants, container, false);
+        View view = inflater.inflate(R.layout.f_friends, container, false);
 
         Context context = view.getContext();
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_restaurants);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_friends);
         mEmptyView = view.findViewById(R.id.empty_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
@@ -88,32 +86,34 @@ public class RestaurantListFragment extends Fragment {
 
             }
         });
-
-//        ArrayList<RestaurantItemBean> restaurants = new ArrayList<>();
-//        RestaurantItemBean r = new RestaurantItemBean();
+//
+//        ArrayList<FriendItemBean> restaurants = new ArrayList<>();
+//        FriendItemBean r = new FriendItemBean();
 //        r.setId("1");
 //        r.setName("name");
-//        r.setDescription("desc");
+////        r.setVisits("desc");
 //        restaurants.add(r);
 //        restaurants.add(r);
 //        restaurants.add(r);
 //        restaurants.add(r);
 
-        mRestaurantListAdapter = new RestaurantListAdapter(mRestaurantsData.getRestaurants(), mListener);
-        mRestaurantListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+
+//        mFriendListAdapter = new FriendListAdapter(restaurants, mListener);
+        mFriendListAdapter = new FriendListAdapter(mFriendsData.getFriends(), mListener);
+        mFriendListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
                 mLogger.d("onChanged called");
-                if (mRestaurantListAdapter.getItemCount() == 0) {
+                if (mFriendListAdapter.getItemCount() == 0) {
                     mEmptyView.setVisibility(View.VISIBLE);
                 } else {
                     mEmptyView.setVisibility(View.GONE);
                 }
             }
         });
-        recyclerView.setAdapter(mRestaurantListAdapter);
-        mRestaurantListAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(mFriendListAdapter);
+        mFriendListAdapter.notifyDataSetChanged();
         return view;
     }
 
@@ -148,6 +148,6 @@ public class RestaurantListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(RestaurantItemBean item);
+        void onListFragmentInteraction(FriendsListFragment item);
     }
 }
