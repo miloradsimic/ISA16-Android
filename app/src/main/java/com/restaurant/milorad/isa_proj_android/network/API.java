@@ -1,6 +1,7 @@
 package com.restaurant.milorad.isa_proj_android.network;
 
 import com.restaurant.milorad.isa_proj_android.App;
+import com.restaurant.milorad.isa_proj_android.network.model.AdminBean;
 import com.zerocodeteam.network.ZctRequest;
 import com.zerocodeteam.network.ZctResponse;
 
@@ -24,7 +25,7 @@ public class API {
     private static final String API_GUEST_PROFILE = "guest/profile";
     private static final String API_ADMIN_ADMINS = "admin/admins";
     private static final String API_ADMIN_DELETE = "admin/delete";
-    private static final String API_SIGN_UP = "authorize/sign-up";
+    private static final String API_ADMIN_CREATE = "admin/create";
 
     private static API sInstance;
 
@@ -204,4 +205,31 @@ public class API {
                 .build();
         App.getNetwork().sendRequest(request);
     }
+
+    public void addNewAdmin(ZctResponse<String> listener, AdminBean admin) {
+        String token = App.getInstance().getUserToken();
+        Map<String, String> headers = new HashMap<>();
+        if (token != null) {
+            headers.put("Authorization", token);
+        } else {
+            headers.put("Authorization", "token_not_provided"/*token*/);
+        }
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("name", admin.getName());
+        params.put("email", admin.getEmail());
+        params.put("password", admin.getPassword());
+        JSONObject obj = new JSONObject(params);
+
+        ZctRequest request = new ZctRequest.Builder(API_BASE_URL + API_ADMIN_CREATE)
+                .method(ZctRequest.Method.POST)
+                .bodyContent(obj.toString())
+                .response(listener)
+                .headers(headers)
+                .build();
+        App.getNetwork().sendRequest(request);
+    }
+
+
+
 }

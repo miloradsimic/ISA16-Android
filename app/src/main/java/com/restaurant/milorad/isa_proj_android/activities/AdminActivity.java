@@ -1,6 +1,7 @@
 package com.restaurant.milorad.isa_proj_android.activities;
 
 import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.restaurant.milorad.isa_proj_android.common.AppConstants;
 import com.restaurant.milorad.isa_proj_android.common.AppUtils;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
 import com.restaurant.milorad.isa_proj_android.fragments.user.admin.AdminFragment;
+import com.restaurant.milorad.isa_proj_android.fragments.user.admin.EditableAdminFragment;
 import com.restaurant.milorad.isa_proj_android.network.API;
 import com.restaurant.milorad.isa_proj_android.network.model.AdminsBean;
 import com.restaurant.milorad.isa_proj_android.network.model.UserProfileBean;
@@ -26,7 +28,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class AdminActivity extends AppCompatActivity implements
-        AdminFragment.OnListFragmentInteractionListener {
+        AdminFragment.OnListFragmentInteractionListener,
+        EditableAdminFragment.OnFragmentInteractionListener {
 
     private static final ZctLogger mLogger = new ZctLogger(MainActivity.class.getSimpleName(), BuildConfig.DEBUG);
 
@@ -234,6 +237,11 @@ public class AdminActivity extends AppCompatActivity implements
 
     @Override
     public void onListFragmentInteraction(UserProfileBean item) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }

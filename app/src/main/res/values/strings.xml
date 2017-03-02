@@ -39,8 +39,11 @@
     <string name="click_for_login">Back to login</string>
     <string name="error_registration">Registration failed.</string>
     <string name="prompt_name">Name</string>
-    <string name="action_register">Register</string>
+    <string name="action_register">REGISTER</string>
     <string name="title_activity_admin">AdminActivity</string>
     <string name="error_logout">Logout FAILED on server.</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="error_create_admin">Error! Admin not created.</string>
+    <string name="action_add_admin">ADD ADMIN</string>
 
 </resources>

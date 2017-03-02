@@ -46,7 +46,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
         View view;
 
         view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.li_admins, parent, false);
+                .inflate(R.layout.li_admins_crud, parent, false);
 
         return new AdminAdapter.ViewHolder(view);
     }
@@ -85,7 +85,9 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
                                 if(responseObject.equals("true")) {
                                     mData.remove(positionToRemove);
                                     notifyDataSetChanged();
-                                    Toast.makeText(holder.itemView.getContext(), "Deleted successfully!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(holder.itemView.getContext(), "Deleted successfully!", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(holder.itemView.getContext(), "Only superuser can delete admins!", Toast.LENGTH_SHORT).show();
                                 }
 
                             }
@@ -93,7 +95,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
                             @Override
                             public void onError(VolleyError error, ZctNetwork.ErrorType type, Map<String, String> responseHeaders, Object cookie) {
                                 AppUtils.hideProgress(mProgressDialog);
-                                Toast.makeText(holder.itemView.getContext(), "Profile data fetch failed", Toast.LENGTH_LONG).show();
+                                Toast.makeText(holder.itemView.getContext(), "Profile data fetch failed", Toast.LENGTH_SHORT).show();
                             }
                         }, holder.mItem.getId());
                     }

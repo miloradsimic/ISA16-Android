@@ -4,12 +4,15 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.restaurant.milorad.isa_proj_android.BuildConfig;
 import com.restaurant.milorad.isa_proj_android.R;
@@ -29,6 +32,8 @@ public class AdminFragment extends Fragment {
     private View mEmptyView;
     private AdminsBean mAdminsData;
     private ZctResponse<String> mDeleteResponse;
+
+    private ImageButton deleteButton;
 
 
     /**
@@ -71,6 +76,17 @@ public class AdminFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_admins);
         mEmptyView = view.findViewById(R.id.empty_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        FloatingActionButton fabAddAdmin = (FloatingActionButton) view.findViewById(R.id.action_add_admin);
+        fabAddAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+                ft.replace(R.id.fragment_container, new EditableAdminFragment(), "Add Admin");
+                ft.commit();
+            }
+        });
 
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
