@@ -9,7 +9,11 @@ import java.io.Serializable;
  * Created by milorad on 1.3.17..
  */
 
-public class ProfileBean implements Serializable{
+public class UserProfileBean implements Serializable {
+
+    @SerializedName("id")
+    @Expose
+    private String id;
 
     @SerializedName("name")
     @Expose
@@ -18,6 +22,14 @@ public class ProfileBean implements Serializable{
     @SerializedName("email")
     @Expose
     private String email;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

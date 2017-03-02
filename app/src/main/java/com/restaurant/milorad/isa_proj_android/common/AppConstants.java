@@ -19,9 +19,12 @@ public class AppConstants {
     /**
      * Shared fragments keys
      */
+    //ROLE: guest
     public static final int FRAG_PROFILE = 0;
     public static final int FRAG_RESTAURANTS = 1;
     public static final int FRAG_FRIENDS = 2;
+    //ROLE: admin
+    public static final int FRAG_ADMINS = 0;
 
 
     /**

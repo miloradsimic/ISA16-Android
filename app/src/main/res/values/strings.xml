@@ -10,13 +10,14 @@
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_name">This name is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="error_empty_list">Notification list is empty :(</string>
+    <string name="error_empty_list">List is empty :(</string>
 
 
     <!-- GENERIC MESSAGES -->
@@ -34,5 +35,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="click_to_register">Click to register</string>
+    <string name="click_for_login">Back to login</string>
+    <string name="error_registration">Registration failed.</string>
+    <string name="prompt_name">Name</string>
+    <string name="action_register">Register</string>
+    <string name="title_activity_admin">AdminActivity</string>
+    <string name="error_logout">Logout FAILED on server.</string>
 
 </resources>

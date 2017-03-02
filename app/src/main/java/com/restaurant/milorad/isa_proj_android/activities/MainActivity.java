@@ -18,13 +18,13 @@ import com.restaurant.milorad.isa_proj_android.common.AppConstants;
 import com.restaurant.milorad.isa_proj_android.common.AppUtils;
 import com.restaurant.milorad.isa_proj_android.common.IIrregularPage;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
-import com.restaurant.milorad.isa_proj_android.fragments.user.FriendsListFragment;
-import com.restaurant.milorad.isa_proj_android.fragments.user.ProfileFragment;
-import com.restaurant.milorad.isa_proj_android.fragments.user.RestaurantListFragment;
+import com.restaurant.milorad.isa_proj_android.fragments.user.guest.FriendsListFragment;
+import com.restaurant.milorad.isa_proj_android.fragments.user.guest.ProfileFragment;
+import com.restaurant.milorad.isa_proj_android.fragments.user.guest.RestaurantListFragment;
 import com.restaurant.milorad.isa_proj_android.network.API;
 import com.restaurant.milorad.isa_proj_android.network.model.FriendItemBean;
 import com.restaurant.milorad.isa_proj_android.network.model.FriendsBean;
-import com.restaurant.milorad.isa_proj_android.network.model.ProfileBean;
+import com.restaurant.milorad.isa_proj_android.network.model.UserProfileBean;
 import com.restaurant.milorad.isa_proj_android.network.model.RestaurantItemBean;
 import com.restaurant.milorad.isa_proj_android.network.model.RestaurantsBean;
 import com.zerocodeteam.network.ZctNetwork;
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements IIrregularPage,
     }
 
     public void setupViews() {
+
         mTabMenu = (TabLayout) findViewById(R.id.main_menu);
         mTabMenu.addTab(mTabMenu.newTab().setText("Profile"));
         mTabMenu.addTab(mTabMenu.newTab().setText("Restaurants"));
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements IIrregularPage,
             public void onError(VolleyError error, ZctNetwork.ErrorType type, Map<String, String> responseHeaders, Object cookie) {
                 mLogger.d("Logout failed: " + error.getClass().getSimpleName());
                 AppUtils.hideProgress(mProgressDialog);
-                Toast.makeText(getApplicationContext(), getString(R.string.error_login), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.error_logout), Toast.LENGTH_LONG).show();
             }
         };
 
@@ -172,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements IIrregularPage,
             @Override
             public void onSuccess(String responseObject, Map<String, String> responseHeaders, Object cookie) {
                 AppUtils.hideProgress(mProgressDialog);
-                ProfileBean profile = ZctNetwork.getGson().fromJson(responseObject, ProfileBean.class);
+                UserProfileBean profile = ZctNetwork.getGson().fromJson(responseObject, UserProfileBean.class);
 
                 mLogger.e("mPageContentResponse, response obj: " + responseObject);
                 ProfileFragment profilePage = ProfileFragment.newInstance(profile);

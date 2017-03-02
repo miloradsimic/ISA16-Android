@@ -1,4 +1,4 @@
-package com.restaurant.milorad.isa_proj_android.fragments.user;
+package com.restaurant.milorad.isa_proj_android.fragments.user.admin;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,42 +14,40 @@ import android.view.ViewGroup;
 import com.restaurant.milorad.isa_proj_android.BuildConfig;
 import com.restaurant.milorad.isa_proj_android.R;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
-import com.restaurant.milorad.isa_proj_android.network.model.FriendsBean;
+import com.restaurant.milorad.isa_proj_android.network.model.AdminsBean;
+import com.restaurant.milorad.isa_proj_android.network.model.UserProfileBean;
+import com.zerocodeteam.network.ZctResponse;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class FriendsListFragment extends Fragment {
 
-    private static final ZctLogger mLogger = new ZctLogger(FriendsListFragment.class.getSimpleName(), BuildConfig.DEBUG);
-    private static final String FRIENDS_LIST_BUNDLE_KEY = "friends_list_data";
+public class AdminFragment extends Fragment {
 
-    private OnListFragmentInteractionListener mListener;
-    private FriendListAdapter mFriendListAdapter;
+    private static final ZctLogger mLogger = new ZctLogger(AdminFragment.class.getSimpleName(), BuildConfig.DEBUG);
+    private static final String ADMINS_LIST_BUNDLE_KEY = "admin_list_data";
+
+    private AdminFragment.OnListFragmentInteractionListener mListener;
+    private AdminAdapter mAdminAdapter;
     private View mEmptyView;
-    private FriendsBean mFriendsData;
+    private AdminsBean mAdminsData;
+    private ZctResponse<String> mDeleteResponse;
 
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public FriendsListFragment() {
+    public AdminFragment() {
     }
 
-    public static FriendsListFragment newInstance() {
-        FriendsListFragment fragment = new FriendsListFragment();
+    public static AdminFragment newInstance() {
+        AdminFragment fragment = new AdminFragment();
         return fragment;
     }
 
-    public static FriendsListFragment newInstance(FriendsBean friends) {
-        FriendsListFragment fragment = new FriendsListFragment();
+    public static AdminFragment newInstance(AdminsBean admins) {
+        AdminFragment fragment = new AdminFragment();
         Bundle args = new Bundle();
 
-        args.putSerializable(FRIENDS_LIST_BUNDLE_KEY, friends);
+        args.putSerializable(ADMINS_LIST_BUNDLE_KEY, admins);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,17 +58,17 @@ public class FriendsListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mFriendsData = (FriendsBean) getArguments().getSerializable(FRIENDS_LIST_BUNDLE_KEY);
+            mAdminsData = (AdminsBean) getArguments().getSerializable(ADMINS_LIST_BUNDLE_KEY);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.f_friends, container, false);
+        View view = inflater.inflate(R.layout.f_admins, container, false);
 
         Context context = view.getContext();
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_friends);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list_admins);
         mEmptyView = view.findViewById(R.id.empty_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
@@ -86,34 +84,22 @@ public class FriendsListFragment extends Fragment {
 
             }
         });
-//
-//        ArrayList<FriendItemBean> restaurants = new ArrayList<>();
-//        FriendItemBean r = new FriendItemBean();
-//        r.setId("1");
-//        r.setName("name");
-////        r.setVisits("desc");
-//        restaurants.add(r);
-//        restaurants.add(r);
-//        restaurants.add(r);
-//        restaurants.add(r);
 
-
-//        mFriendListAdapter = new FriendListAdapter(restaurants, mListener);
-        mFriendListAdapter = new FriendListAdapter(mFriendsData.getFriends(), mListener);
-        mFriendListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        mAdminAdapter = new AdminAdapter(mAdminsData.getAdmins(), mListener);
+        mAdminAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
                 mLogger.d("onChanged called");
-                if (mFriendListAdapter.getItemCount() == 0) {
+                if (mAdminAdapter.getItemCount() == 0) {
                     mEmptyView.setVisibility(View.VISIBLE);
                 } else {
                     mEmptyView.setVisibility(View.GONE);
                 }
             }
         });
-        recyclerView.setAdapter(mFriendListAdapter);
-        mFriendListAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(mAdminAdapter);
+        mAdminAdapter.notifyDataSetChanged();
         return view;
     }
 
@@ -122,8 +108,8 @@ public class FriendsListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof AdminFragment.OnListFragmentInteractionListener) {
+            mListener = (AdminFragment.OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -148,6 +134,6 @@ public class FriendsListFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(FriendsListFragment item);
+        void onListFragmentInteraction(UserProfileBean item);
     }
 }

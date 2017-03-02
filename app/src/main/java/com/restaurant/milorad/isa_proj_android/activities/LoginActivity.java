@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -13,13 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.google.gson.internal.LinkedTreeMap;
 import com.restaurant.milorad.isa_proj_android.App;
 import com.restaurant.milorad.isa_proj_android.BuildConfig;
 import com.restaurant.milorad.isa_proj_android.R;
 import com.restaurant.milorad.isa_proj_android.common.AppUtils;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
 import com.restaurant.milorad.isa_proj_android.network.API;
+import com.restaurant.milorad.isa_proj_android.network.model.LoginBean;
 import com.zerocodeteam.network.ZctNetwork;
 import com.zerocodeteam.network.ZctResponse;
 
@@ -33,14 +34,19 @@ public class LoginActivity extends AppCompatActivity {
 
     // UI references.
     private EditText mEmail;
+    private EditText mName;
     private EditText mPassword;
     private Button mSignInButton;
+    private Button mRegisterButton;
+    private TextView mRegisterTV;
+    private TextView mLoginTV;
 
-    private View.OnClickListener mOnClickListener;
+    public View.OnClickListener mOnClickListener;
     private EditText.OnEditorActionListener mOnEditorActionListener;
-    private ZctResponse<LinkedTreeMap<String, String>> mLoginResponse;
+    private ZctResponse<String> mLoginResponse;
     private ProgressDialog mProgressDialog;
     private ZctResponse<String> mGetShift;
+    private ZctResponse<String> mRegisterResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +63,26 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
+
     public void setupViews() {
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
+        mName = (EditText) findViewById(R.id.name);
         mSignInButton = (Button) findViewById(R.id.action_login);
+        mRegisterButton = (Button) findViewById(R.id.action_register);
+        mRegisterTV = (TextView) findViewById(R.id.tv_register);
+        mLoginTV = (TextView) findViewById(R.id.tv_login);
+
+        showLogin();
     }
 
     public void setupListeners() {
         prepareListeners();
         mPassword.setOnEditorActionListener(mOnEditorActionListener);
         mSignInButton.setOnClickListener(mOnClickListener);
+        mRegisterButton.setOnClickListener(mOnClickListener);
+        mRegisterTV.setOnClickListener(mOnClickListener);
+        mLoginTV.setOnClickListener(mOnClickListener);
     }
 
     public void prepareListeners() {
@@ -77,6 +93,18 @@ public class LoginActivity extends AppCompatActivity {
                     case R.id.action_login:
                         attemptLogin();
                         break;
+                    case R.id.action_register: {
+                        attemptRegistration();
+                        break;
+                    }
+                    case R.id.tv_register: {
+                        showRegister();
+                        break;
+                    }
+                    case R.id.tv_login: {
+                        showLogin();
+                        break;
+                    }
                     default:
                         break;
                 }
@@ -94,15 +122,56 @@ public class LoginActivity extends AppCompatActivity {
                 return handled;
             }
         };
-        mLoginResponse = new ZctResponse<LinkedTreeMap<String, String>>() {
+        mLoginResponse = new ZctResponse<String>() {
             @Override
-            public void onSuccess(LinkedTreeMap<String, String> data, Map<String, String> responseHeaders, Object cookie) {
+            public void onSuccess(String data, Map<String, String> responseHeaders, Object cookie) {
                 AppUtils.hideProgress(mProgressDialog);
-                App.getInstance().setRole(data.get("role"));
+                LoginBean loginResponse = null;
+
+                loginResponse = ZctNetwork.getGson().fromJson(data, LoginBean.class);
+
+
+                if(loginResponse==null) {
+                    Toast.makeText(getApplicationContext(), "User don't exist!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                App.getInstance().setRole(loginResponse.getRole());
 
                 Toast.makeText(getApplicationContext(), "Login successful!", Toast.LENGTH_SHORT).show();
 
-                AppUtils.go2MainActivity(LoginActivity.this);
+                Log.e("Role from app; ", App.getInstance().getRole());
+                switch (loginResponse.getRole()) {
+                    case "admin": {}
+                    case "superuser":{
+                        AppUtils.go2AdminActivity(LoginActivity.this);
+                        break;
+                    }
+                    case "bartender": {
+                        /* TODO: To be implemented*/
+                        break;
+                    }
+                    case "cook": {
+                        /* TODO: To be implemented*/
+                        break;
+                    }
+                    case "guest": {
+                        AppUtils.go2MainActivity(LoginActivity.this);
+                        break;
+                    }
+                    case "manager": {
+                        /* TODO: To be implemented*/
+                        break;
+                    }
+                    case "supplier": {
+                        /* TODO: To be implemented*/
+                        break;
+                    }
+                    case "waiter": {
+                        /* TODO: To be implemented*/
+                        break;
+                    }
+                }
 
             }
 
@@ -115,7 +184,28 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
+        mRegisterResponse = new ZctResponse<String>() {
+            @Override
+            public void onSuccess(String data, Map<String, String> responseHeaders, Object cookie) {
+                AppUtils.hideProgress(mProgressDialog);
+
+                Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT).show();
+
+                showLogin();
+
+            }
+
+            @Override
+            public void onError(VolleyError error, ZctNetwork.ErrorType type, Map<String, String> responseHeaders, Object cookie) {
+                mLogger.d("Registration failed: " + error.getClass().getSimpleName());
+                App.getInstance().logoutUser();
+                AppUtils.hideProgress(mProgressDialog);
+                Toast.makeText(getApplicationContext(), getString(R.string.error_registration), Toast.LENGTH_LONG).show();
+            }
+        };
+
     }
+
     /**
      * Attempts to sign in the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -167,10 +257,82 @@ public class LoginActivity extends AppCompatActivity {
 
         API.getInstance().loginUser(mLoginResponse);
     }
-    private String makeToken(String email, String password){
+
+    private String makeToken(String email, String password) {
 
         return AppUtils.genBase64(email + ":" + password);
     }
+
+    public void showLogin() {
+        mLoginTV.setVisibility(View.GONE);
+        mSignInButton.setVisibility(View.VISIBLE);
+        mRegisterButton.setVisibility(View.GONE);
+        mRegisterTV.setVisibility(View.VISIBLE);
+        mName.setVisibility(View.GONE);
+
+    }
+
+    private void showRegister() {
+        mLoginTV.setVisibility(View.VISIBLE);
+        mSignInButton.setVisibility(View.GONE);
+        mRegisterButton.setVisibility(View.VISIBLE);
+        mRegisterTV.setVisibility(View.GONE);
+        mName.setVisibility(View.VISIBLE);
+    }
+
+
+    private void attemptRegistration() {
+        // Reset errors.
+        mEmail.setError(null);
+        mPassword.setError(null);
+        mName.setError(null);
+
+        // Store values at the time of the login attempt.
+        String email = mEmail.getText().toString();
+        String name = mName.getText().toString();
+        String password = mPassword.getText().toString();
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            this.mEmail.setError(getString(R.string.error_field_required));
+            this.mEmail.requestFocus();
+            return;
+        } else if (!AppUtils.isEmailValid(email)) {
+            this.mEmail.setError(getString(R.string.error_invalid_email));
+            this.mEmail.requestFocus();
+            return;
+        }
+
+        // Check for a valid name.
+        if (TextUtils.isEmpty(name)) {
+            this.mName.setError(getString(R.string.error_field_required));
+            this.mName.requestFocus();
+            return;
+        }
+
+        // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(password)) {
+            this.mPassword.setError(getString(R.string.error_field_required));
+            this.mPassword.requestFocus();
+            return;
+        } else if (!AppUtils.isPasswordValid(password)) {
+            this.mPassword.setError(getString(R.string.error_invalid_password));
+            this.mPassword.requestFocus();
+            return;
+        }
+
+        // Perform the user login attempt.
+        mProgressDialog = AppUtils.showProgress(LoginActivity.this);
+
+        /*store db id for further use*/
+        long dbId = App.getDatabase().createUser(email);
+        App.getInstance().setUserDbId(dbId);
+        App.getInstance().setUserEmail(email);
+        App.getInstance().setUserPassword(password);
+
+        API.getInstance().registerGuest(mRegisterResponse, name);
+    }
+
 
 }
 

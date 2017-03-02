@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/list_admins"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_secondary"
+        android:clipToPadding="false"
+        android:padding="@dimen/xsmall_margin"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/li_restaurant" />
+
+    <com.restaurant.milorad.isa_proj_android.views.MyriadProBoldTextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/error_empty_list"
+        android:textColor="@color/app_white"
+        android:textSize="@dimen/heading_2" />
+
+</FrameLayout>

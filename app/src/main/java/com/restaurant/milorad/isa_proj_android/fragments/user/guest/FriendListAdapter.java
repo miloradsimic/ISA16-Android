@@ -1,4 +1,4 @@
-package com.restaurant.milorad.isa_proj_android.fragments.user;
+package com.restaurant.milorad.isa_proj_android.fragments.user.guest;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -50,14 +50,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
                 Log.e("Adaper: ", "Clicked");
             }
         });
-
-//
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AppUtils.go2RestaurantActivity();
-//            }
-//        });
     }
 
     @Override

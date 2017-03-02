@@ -1,4 +1,4 @@
-package com.restaurant.milorad.isa_proj_android.fragments.user;
+package com.restaurant.milorad.isa_proj_android.fragments.user.guest;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.restaurant.milorad.isa_proj_android.R;
-import com.restaurant.milorad.isa_proj_android.network.model.ProfileBean;
+import com.restaurant.milorad.isa_proj_android.network.model.UserProfileBean;
 
 /**
  * A fragment with a Google +1 button.
@@ -23,7 +23,7 @@ import com.restaurant.milorad.isa_proj_android.network.model.ProfileBean;
 public class ProfileFragment extends Fragment {
     private static final String PROFILE_BUNDLE_KEY = "profile_data";
 
-    private ProfileBean mProfileData;
+    private UserProfileBean mProfileData;
 
     private OnFragmentInteractionListener mListener;
 
@@ -40,7 +40,7 @@ public class ProfileFragment extends Fragment {
      * @param profile Parameter 1.
      * @return A new instance of fragment ProfileFragment.
      */
-    public static ProfileFragment newInstance(ProfileBean profile) {
+    public static ProfileFragment newInstance(UserProfileBean profile) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putSerializable(PROFILE_BUNDLE_KEY, profile);
@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mProfileData = (ProfileBean) getArguments().getSerializable(PROFILE_BUNDLE_KEY);
+            mProfileData = (UserProfileBean) getArguments().getSerializable(PROFILE_BUNDLE_KEY);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.restaurant.milorad.isa_proj_android.fragments.user;
+package com.restaurant.milorad.isa_proj_android.fragments.user.guest;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.restaurant.milorad.isa_proj_android.R;
-import com.restaurant.milorad.isa_proj_android.fragments.user.RestaurantListFragment.OnListFragmentInteractionListener;
 import com.restaurant.milorad.isa_proj_android.network.model.RestaurantItemBean;
 
 import java.util.ArrayList;
@@ -20,9 +19,9 @@ import java.util.ArrayList;
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.ViewHolder> {
 
     private final ArrayList<RestaurantItemBean> mData;
-    private final OnListFragmentInteractionListener mListener;
+    private final RestaurantListFragment.OnListFragmentInteractionListener mListener;
 
-    public RestaurantListAdapter(ArrayList<RestaurantItemBean> items, OnListFragmentInteractionListener listener) {
+    public RestaurantListAdapter(ArrayList<RestaurantItemBean> items, RestaurantListFragment.OnListFragmentInteractionListener listener) {
         mData = items;
         mListener = listener;
     }
