@@ -88,6 +88,16 @@
                 android:text="@string/action_add_admin"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/action_update"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_update_admin"
+                android:textStyle="bold" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

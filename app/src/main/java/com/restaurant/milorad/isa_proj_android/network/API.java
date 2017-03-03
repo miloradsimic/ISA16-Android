@@ -26,6 +26,7 @@ public class API {
     private static final String API_ADMIN_ADMINS = "admin/admins";
     private static final String API_ADMIN_DELETE = "admin/delete";
     private static final String API_ADMIN_CREATE = "admin/create";
+    private static final String API_ADMIN_UPDATE = "admin/update";
 
     private static API sInstance;
 
@@ -222,6 +223,31 @@ public class API {
         JSONObject obj = new JSONObject(params);
 
         ZctRequest request = new ZctRequest.Builder(API_BASE_URL + API_ADMIN_CREATE)
+                .method(ZctRequest.Method.POST)
+                .bodyContent(obj.toString())
+                .response(listener)
+                .headers(headers)
+                .build();
+        App.getNetwork().sendRequest(request);
+    }
+
+    public void updateAdmin(ZctResponse<String> listener, AdminBean admin) {
+        String token = App.getInstance().getUserToken();
+        Map<String, String> headers = new HashMap<>();
+        if (token != null) {
+            headers.put("Authorization", token);
+        } else {
+            headers.put("Authorization", "token_not_provided"/*token*/);
+        }
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("name", admin.getName());
+        params.put("email", admin.getEmail());
+        params.put("password", admin.getPassword());
+        params.put("id", admin.getId());
+        JSONObject obj = new JSONObject(params);
+
+        ZctRequest request = new ZctRequest.Builder(API_BASE_URL + API_ADMIN_UPDATE)
                 .method(ZctRequest.Method.POST)
                 .bodyContent(obj.toString())
                 .response(listener)

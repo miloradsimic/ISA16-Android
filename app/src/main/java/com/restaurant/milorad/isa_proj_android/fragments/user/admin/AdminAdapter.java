@@ -19,7 +19,7 @@ import com.restaurant.milorad.isa_proj_android.activities.MainActivity;
 import com.restaurant.milorad.isa_proj_android.common.AppUtils;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
 import com.restaurant.milorad.isa_proj_android.network.API;
-import com.restaurant.milorad.isa_proj_android.network.model.UserProfileBean;
+import com.restaurant.milorad.isa_proj_android.network.model.AdminBean;
 import com.zerocodeteam.network.ZctNetwork;
 import com.zerocodeteam.network.ZctResponse;
 
@@ -31,14 +31,16 @@ import java.util.Map;
  */
 public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> {
 
-    private final ArrayList<UserProfileBean> mData;
+    private final ArrayList<AdminBean> mData;
     private final AdminFragment.OnListFragmentInteractionListener mListener;
     private ProgressDialog mProgressDialog;
     private static final ZctLogger mLogger = new ZctLogger(MainActivity.class.getSimpleName(), BuildConfig.DEBUG);
+    private MRAItemClickedListener mOnItemClickListener;
 
-    public AdminAdapter(ArrayList<UserProfileBean> items, AdminFragment.OnListFragmentInteractionListener listener) {
+    public AdminAdapter(ArrayList<AdminBean> items, AdminFragment.OnListFragmentInteractionListener listener, MRAItemClickedListener mraListener) {
         mData = items;
         mListener = listener;
+        mOnItemClickListener = mraListener;
     }
 
     @Override
@@ -52,7 +54,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(final AdminAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final AdminAdapter.ViewHolder holder, final int position) {
         holder.mItem = mData.get(position);
         holder.mTitleView.setText(mData.get(position).getName());
         holder.mDescriptionView.setText(mData.get(position).getEmail());
@@ -60,7 +62,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.mItem.getId();
+                mOnItemClickListener.onItemClicked(holder.mItem);
 
             }
         });
@@ -116,7 +118,7 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
         public final View mView;
         public final TextView mTitleView;
         public final TextView mDescriptionView;
-        public UserProfileBean mItem;
+        public AdminBean mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -130,4 +132,8 @@ public class AdminAdapter extends RecyclerView.Adapter<AdminAdapter.ViewHolder> 
             return super.toString() + " '" + mDescriptionView.getText() + "'";
         }
     }
+    interface MRAItemClickedListener {
+        void onItemClicked(AdminBean item);
+    }
+
 }

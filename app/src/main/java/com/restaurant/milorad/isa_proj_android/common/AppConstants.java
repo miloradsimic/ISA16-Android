@@ -28,6 +28,13 @@ public class AppConstants {
 
 
     /**
+     * Modes
+     */
+    public static final int MODE_UPDATE = 0;
+    public static final int MODE_CREATE = 1;
+
+
+    /**
      * Share intent constants
      */
 

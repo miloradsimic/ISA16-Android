@@ -16,7 +16,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // TABLE NAMES
     public static final String TABLE_USERS = "users";
-    public static final String TABLE_RESTAURANTS = "RESTAURANTS";
 
 
 

@@ -16,18 +16,21 @@ import android.widget.ImageButton;
 
 import com.restaurant.milorad.isa_proj_android.BuildConfig;
 import com.restaurant.milorad.isa_proj_android.R;
+import com.restaurant.milorad.isa_proj_android.common.AppConstants;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
+import com.restaurant.milorad.isa_proj_android.network.model.AdminBean;
 import com.restaurant.milorad.isa_proj_android.network.model.AdminsBean;
-import com.restaurant.milorad.isa_proj_android.network.model.UserProfileBean;
 import com.zerocodeteam.network.ZctResponse;
 
 
-public class AdminFragment extends Fragment {
+public class AdminFragment extends Fragment implements AdminAdapter.MRAItemClickedListener {
 
     private static final ZctLogger mLogger = new ZctLogger(AdminFragment.class.getSimpleName(), BuildConfig.DEBUG);
     private static final String ADMINS_LIST_BUNDLE_KEY = "admin_list_data";
 
     private AdminFragment.OnListFragmentInteractionListener mListener;
+    private AdminAdapter.MRAItemClickedListener mraListener;
+    private AdminBean mMraItemClicked;
     private AdminAdapter mAdminAdapter;
     private View mEmptyView;
     private AdminsBean mAdminsData;
@@ -57,7 +60,6 @@ public class AdminFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,13 +79,23 @@ public class AdminFragment extends Fragment {
         mEmptyView = view.findViewById(R.id.empty_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
+        mraListener = new AdminAdapter.MRAItemClickedListener() {
+            @Override
+            public void onItemClicked(AdminBean item) {
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+                ft.replace(R.id.fragment_container, EditableAdminFragment.newInstance(AppConstants.MODE_UPDATE, item), "update");
+                ft.commit();
+            }
+        };
+
         FloatingActionButton fabAddAdmin = (FloatingActionButton) view.findViewById(R.id.action_add_admin);
         fabAddAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.addToBackStack(null);
-                ft.replace(R.id.fragment_container, new EditableAdminFragment(), "Add Admin");
+                ft.replace(R.id.fragment_container, EditableAdminFragment.newInstance(AppConstants.MODE_CREATE), "create");
                 ft.commit();
             }
         });
@@ -101,7 +113,7 @@ public class AdminFragment extends Fragment {
             }
         });
 
-        mAdminAdapter = new AdminAdapter(mAdminsData.getAdmins(), mListener);
+        mAdminAdapter = new AdminAdapter(mAdminsData.getAdmins(), mListener, mraListener);
         mAdminAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -118,7 +130,6 @@ public class AdminFragment extends Fragment {
         mAdminAdapter.notifyDataSetChanged();
         return view;
     }
-
 
 
     @Override
@@ -138,6 +149,10 @@ public class AdminFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onItemClicked(AdminBean item) {
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -149,7 +164,6 @@ public class AdminFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(UserProfileBean item);
+        void onListFragmentInteraction(AdminBean item);
     }
 }

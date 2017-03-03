@@ -15,14 +15,14 @@ public class AdminsBean implements Serializable {
 
     @SerializedName("admins")
     @Expose
-    private ArrayList<UserProfileBean> admins = new ArrayList<>();
+    private ArrayList<AdminBean> admins = new ArrayList<>();
 
 
-    public ArrayList<UserProfileBean> getAdmins() {
+    public ArrayList<AdminBean> getAdmins() {
         return admins;
     }
 
-    public void setAdmins(ArrayList<UserProfileBean> admins) {
+    public void setAdmins(ArrayList<AdminBean> admins) {
         this.admins = admins;
     }
 }
