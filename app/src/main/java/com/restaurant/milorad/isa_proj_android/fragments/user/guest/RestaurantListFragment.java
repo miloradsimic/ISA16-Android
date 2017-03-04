@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,12 +24,13 @@ import com.restaurant.milorad.isa_proj_android.network.model.RestaurantsBean;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class RestaurantListFragment extends Fragment {
+public class RestaurantListFragment extends Fragment implements RestaurantListAdapter.MRAItemClickedListener{
 
     private static final ZctLogger mLogger = new ZctLogger(RestaurantListFragment.class.getSimpleName(), BuildConfig.DEBUG);
     private static final String RESTAURANTS_LIST_BUNDLE_KEY = "restaurant_list_data";
 
     private OnListFragmentInteractionListener mListener;
+    private RestaurantListAdapter.MRAItemClickedListener mraListener;
     private RestaurantListAdapter mRestaurantListAdapter;
     private View mEmptyView;
     private RestaurantsBean mRestaurantsData;
@@ -76,6 +78,18 @@ public class RestaurantListFragment extends Fragment {
         mEmptyView = view.findViewById(R.id.empty_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
+
+        mraListener = new RestaurantListAdapter.MRAItemClickedListener() {
+            @Override
+            public void onItemClicked(RestaurantItemBean item) {
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+                ft.replace(R.id.fragment_container, ReservationTimeFragment.newInstance(item), "reservationTime");
+                ft.commit();
+            }
+        };
+
+
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -89,17 +103,8 @@ public class RestaurantListFragment extends Fragment {
             }
         });
 
-//        ArrayList<RestaurantItemBean> restaurants = new ArrayList<>();
-//        RestaurantItemBean r = new RestaurantItemBean();
-//        r.setId("1");
-//        r.setName("name");
-//        r.setDescription("desc");
-//        restaurants.add(r);
-//        restaurants.add(r);
-//        restaurants.add(r);
-//        restaurants.add(r);
 
-        mRestaurantListAdapter = new RestaurantListAdapter(mRestaurantsData.getRestaurants(), mListener);
+        mRestaurantListAdapter = new RestaurantListAdapter(mRestaurantsData.getRestaurants(), mListener, mraListener);
         mRestaurantListAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -134,6 +139,11 @@ public class RestaurantListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemClicked(RestaurantItemBean item) {
+
     }
 
     /**

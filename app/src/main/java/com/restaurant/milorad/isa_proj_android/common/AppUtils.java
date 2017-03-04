@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Patterns;
 import android.view.View;
@@ -13,16 +12,19 @@ import android.view.inputmethod.InputMethodManager;
 import com.restaurant.milorad.isa_proj_android.BuildConfig;
 import com.restaurant.milorad.isa_proj_android.R;
 import com.restaurant.milorad.isa_proj_android.activities.AdminActivity;
-import com.restaurant.milorad.isa_proj_android.activities.LoginActivity;
 import com.restaurant.milorad.isa_proj_android.activities.MainActivity;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Rade on 5/22/2015.
  */
 public class AppUtils {
 
+    private static Calendar cal;
     private static ZctLogger mLogger = new ZctLogger(AppUtils.class.getSimpleName(), BuildConfig.DEBUG);
 
     public static boolean isEmailValid(String pEmail) {
@@ -63,12 +65,6 @@ public class AppUtils {
         }
     }
 
-    public static void go2Login(Context context) {
-        Intent go2Login = new Intent(context, LoginActivity.class);
-        go2Login.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(go2Login);
-    }
-
     public static void go2MainActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
 //        intent.putExtra("restaurants", data);
@@ -81,6 +77,19 @@ public class AppUtils {
         context.startActivity(intent);
     }
 
+    public static String dateToString(Date date) {
+        cal = GregorianCalendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.DAY_OF_MONTH) + "-" +
+                (cal.get(Calendar.MONTH)+1) + "-" +
+                cal.get(Calendar.YEAR);
+    }
+    public static String timeToString(Date time) {
+        cal = GregorianCalendar.getInstance();
+        cal.setTime(time);
+        return cal.get(Calendar.HOUR_OF_DAY) + ":" +
+                cal.get(Calendar.MINUTE);
+    }
 
 
     public static Long getTimestampInMs() {
@@ -88,11 +97,4 @@ public class AppUtils {
         mLogger.e("getTimestampInMs: " + AppConstants.sDateTimeFormat.format(retTime));
         return retTime;
     }
-
-    public static String getUniqueID(Context applicationContext) {
-        TelephonyManager telephoneMgr = (TelephonyManager) applicationContext.getSystemService(Context.TELEPHONY_SERVICE);
-        return telephoneMgr.getDeviceId();
-    }
-
-
 }

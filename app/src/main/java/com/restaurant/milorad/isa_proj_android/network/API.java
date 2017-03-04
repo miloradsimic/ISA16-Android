@@ -2,6 +2,7 @@ package com.restaurant.milorad.isa_proj_android.network;
 
 import com.restaurant.milorad.isa_proj_android.App;
 import com.restaurant.milorad.isa_proj_android.network.model.AdminBean;
+import com.restaurant.milorad.isa_proj_android.network.model.ReservationTimeBean;
 import com.zerocodeteam.network.ZctRequest;
 import com.zerocodeteam.network.ZctResponse;
 
@@ -20,6 +21,8 @@ public class API {
     private static final String API_LOGIN = "auth/login";
     private static final String API_LOGOUT = "auth/logout";
     private static final String API_GUEST_RESTAURANTS = "guest/restaurants";
+    private static final String API_GUEST_RESERVATION_TIME = "guest/reservation/time";
+    private static final String API_GUEST_RESERVATION_TABLES = "guest/reservation/tables";
     private static final String API_GUEST_FRIENDS = "guest/friends";
     private static final String API_GUEST_REGISTER = "guest/register";
     private static final String API_GUEST_PROFILE = "guest/profile";
@@ -43,11 +46,6 @@ public class API {
      * @param listener
      */
     public void loginUser(ZctResponse<String> listener) {
-
-//        HashMap<String, String> params = new HashMap<>();
-//        params.put("username", App.getInstance().getUserEmail());
-//        params.put("password", App.getInstance().getUserPassword());
-//        JSONObject obj = new JSONObject(params);
 
         String token = App.getInstance().getUserToken();
         Map<String, String> headers = new HashMap<>();
@@ -256,6 +254,30 @@ public class API {
         App.getNetwork().sendRequest(request);
     }
 
+
+    public void getReservationTables(ZctResponse<String> listener, ReservationTimeBean reservationTime) {
+        String token = App.getInstance().getUserToken();
+        Map<String, String> headers = new HashMap<>();
+        if (token != null) {
+            headers.put("Authorization", token);
+        } else {
+            headers.put("Authorization", "token_not_provided"/*token*/);
+        }
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("restaurant_id", Long.toString(reservationTime.getRestaurantID()));
+        params.put("reservation_start", Long.toString(reservationTime.getReservationBegin().getTime()));
+        params.put("duration", Integer.toString(reservationTime.getDuration()));
+        JSONObject obj = new JSONObject(params);
+
+        ZctRequest request = new ZctRequest.Builder(API_BASE_URL + API_GUEST_RESERVATION_TABLES)
+                .method(ZctRequest.Method.POST)
+                .bodyContent(obj.toString())
+                .response(listener)
+                .headers(headers)
+                .build();
+        App.getNetwork().sendRequest(request);
+    }
 
 
 }

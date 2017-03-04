@@ -46,5 +46,14 @@
     <string name="error_create_admin">Error! Admin not created.</string>
     <string name="action_add_admin">ADD ADMIN</string>
     <string name="action_update_admin">UPDATE ADMIN</string>
+    <string name="label_restaurant_name">Restaurant:</string>
+    <string name="restaurant_name">Jedite kod Dzoa</string>
+    <string name="date">Date:</string>
+    <string name="time">Time:</string>
+    <string name="duration">Duration:</string>
+    <string name="action_next">NEXT</string>
+    <string name="date_format">dd-mm-yyyy</string>
+    <string name="time_format">hh:MM</string>
+    <string name="hint_duration">Type in hours</string>
 
 </resources>

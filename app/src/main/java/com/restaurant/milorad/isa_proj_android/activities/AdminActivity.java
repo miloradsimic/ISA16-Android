@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +26,6 @@ import com.zerocodeteam.network.ZctNetwork;
 import com.zerocodeteam.network.ZctResponse;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class AdminActivity extends AppCompatActivity implements
@@ -124,8 +122,6 @@ public class AdminActivity extends AppCompatActivity implements
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, adminsFrag).commitAllowingStateLoss();
 
-                Toast.makeText(getApplicationContext(), "Got admins list! ", Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
@@ -138,16 +134,6 @@ public class AdminActivity extends AppCompatActivity implements
         };
 
 
-    }
-    public Fragment getVisibleFragment(){
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if(fragments != null){
-            for(Fragment fragment : fragments){
-                if(fragment != null && fragment.isVisible())
-                    return fragment;
-            }
-        }
-        return null;
     }
 
 

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--Restaurant name-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/medium_margin"
+                android:orientation="horizontal">
+
+                <com.restaurant.milorad.isa_proj_android.views.MyriadProRegularTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="left"
+                    android:text="@string/label_restaurant_name"
+                    android:textColor="@color/app_white"
+                    android:textSize="@dimen/heading_2" />
+
+                <com.restaurant.milorad.isa_proj_android.views.MyriadProRegularTextView
+                    android:id="@+id/tv_restaurant_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="left"
+                    android:text="@string/restaurant_name"
+                    android:textColor="@color/app_white"
+                    android:textSize="@dimen/heading_2" />
+            </LinearLayout>
+            <!--Reservation start date-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/medium_margin"
+                android:orientation="horizontal">
+
+                <com.restaurant.milorad.isa_proj_android.views.MyriadProRegularTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="left"
+                    android:text="@string/date"
+                    android:textColor="@color/app_white"
+                    android:textSize="@dimen/heading_2" />
+
+                <com.restaurant.milorad.isa_proj_android.views.CenturyGothicEditText
+                    android:id="@+id/edit_reservation_start_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="left"
+                    android:text="@string/date_format"
+                    android:textColor="@color/app_white"
+                    android:textSize="@dimen/heading_2" />
+
+                <Button
+                    android:id="@+id/btnChangeDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="@android:drawable/ic_menu_my_calendar" />
+            </LinearLayout>
+            <!--Reservation start time-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/medium_margin"
+                android:orientation="horizontal">
+
+                <com.restaurant.milorad.isa_proj_android.views.MyriadProRegularTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="left"
+                    android:text="@string/time"
+                    android:textColor="@color/app_white"
+                    android:textSize="@dimen/heading_2" />
+
+                <com.restaurant.milorad.isa_proj_android.views.CenturyGothicEditText
+                    android:id="@+id/edit_reservation_start_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="left"
+                    android:text="5/5/2005 22:20:10"
+                    android:textColor="@color/app_white"
+                    android:textSize="@dimen/heading_2" />
+
+                <Button
+                    android:id="@+id/btnChangeTime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:onClick="showTimePickerDialog"
+                    android:background="@android:drawable/ic_menu_my_calendar" />
+            </LinearLayout>
+            <!--Reservation duration-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/medium_margin"
+                android:orientation="horizontal">
+
+                <com.restaurant.milorad.isa_proj_android.views.MyriadProRegularTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="left"
+                    android:text="@string/duration"
+                    android:textColor="@color/app_white"
+                    android:textSize="@dimen/heading_2" />
+
+                <com.restaurant.milorad.isa_proj_android.views.CenturyGothicEditText
+                    android:id="@+id/edit_reservation_duration"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="left"
+                    android:hint="@string/hint_duration"
+                    android:inputType="number"
+                    android:textColor="@color/app_white"
+                    android:textSize="@dimen/heading_2" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/action_next"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_next"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</FrameLayout>

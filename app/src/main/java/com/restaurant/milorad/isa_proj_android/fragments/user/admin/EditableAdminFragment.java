@@ -215,7 +215,7 @@ public class EditableAdminFragment extends Fragment {
                     getFragmentManager().popBackStack();
                     ((AdminActivity)getActivity()).populatePageContent(AppConstants.FRAG_ADMINS);
                 } else {
-                    Toast.makeText(getContext(), "Admin not created!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -299,7 +299,7 @@ public class EditableAdminFragment extends Fragment {
 
 
                 } else {
-                    Toast.makeText(getContext(), "Admin not updated!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
                 }
             }
 

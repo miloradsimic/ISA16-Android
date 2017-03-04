@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -20,23 +20,25 @@ import com.restaurant.milorad.isa_proj_android.common.IIrregularPage;
 import com.restaurant.milorad.isa_proj_android.common.ZctLogger;
 import com.restaurant.milorad.isa_proj_android.fragments.user.guest.FriendsListFragment;
 import com.restaurant.milorad.isa_proj_android.fragments.user.guest.ProfileFragment;
+import com.restaurant.milorad.isa_proj_android.fragments.user.guest.ReservationTimeFragment;
 import com.restaurant.milorad.isa_proj_android.fragments.user.guest.RestaurantListFragment;
 import com.restaurant.milorad.isa_proj_android.network.API;
 import com.restaurant.milorad.isa_proj_android.network.model.FriendItemBean;
 import com.restaurant.milorad.isa_proj_android.network.model.FriendsBean;
-import com.restaurant.milorad.isa_proj_android.network.model.UserProfileBean;
 import com.restaurant.milorad.isa_proj_android.network.model.RestaurantItemBean;
 import com.restaurant.milorad.isa_proj_android.network.model.RestaurantsBean;
+import com.restaurant.milorad.isa_proj_android.network.model.UserProfileBean;
 import com.zerocodeteam.network.ZctNetwork;
 import com.zerocodeteam.network.ZctResponse;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements IIrregularPage,
+public class MainActivity extends FragmentActivity implements IIrregularPage,
         RestaurantListFragment.OnListFragmentInteractionListener,
         ProfileFragment.OnFragmentInteractionListener,
-        FriendsListFragment.OnListFragmentInteractionListener {
+        FriendsListFragment.OnListFragmentInteractionListener,
+        ReservationTimeFragment.OnFragmentInteractionListener {
 
     private static final ZctLogger mLogger = new ZctLogger(MainActivity.class.getSimpleName(), BuildConfig.DEBUG);
 
@@ -266,6 +268,11 @@ public class MainActivity extends AppCompatActivity implements IIrregularPage,
 
     @Override
     public void onListFragmentInteraction(FriendsListFragment item) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction() {
 
     }
 }

@@ -1,7 +1,6 @@
 package com.restaurant.milorad.isa_proj_android.fragments.user.guest;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +19,12 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     private final ArrayList<RestaurantItemBean> mData;
     private final RestaurantListFragment.OnListFragmentInteractionListener mListener;
+    private MRAItemClickedListener mOnItemClickListener;
 
-    public RestaurantListAdapter(ArrayList<RestaurantItemBean> items, RestaurantListFragment.OnListFragmentInteractionListener listener) {
+    public RestaurantListAdapter(ArrayList<RestaurantItemBean> items, RestaurantListFragment.OnListFragmentInteractionListener listener, RestaurantListAdapter.MRAItemClickedListener mraListener) {
         mData = items;
         mListener = listener;
+        mOnItemClickListener = mraListener;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.li_restaurant, parent, false);
 
-        return new ViewHolder(view);
+        return new RestaurantListAdapter.ViewHolder(view);
     }
 
     @Override
@@ -42,22 +43,15 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
         holder.mTitleView.setText(mData.get(position).getName());
         holder.mDescriptionView.setText(mData.get(position).getDescription());
 
+
+
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mOnItemClickListener.onItemClicked(holder.mItem);
 
-
-                Log.e("Adaper: ", "Clicked");
             }
         });
-
-//
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AppUtils.go2RestaurantActivity();
-//            }
-//        });
     }
 
     @Override
@@ -84,4 +78,8 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             return super.toString() + " '" + mDescriptionView.getText() + "'";
         }
     }
+    interface MRAItemClickedListener {
+        void onItemClicked(RestaurantItemBean item);
+    }
+
 }
